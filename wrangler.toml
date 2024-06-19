@@ -1,0 +1,22 @@
+# Cloudflare pages requires a top level name attribute
+name = "gallery"
+
+# Cloudflare Pages will ignore wrangler.toml without this line
+pages_build_output_dir = "./build/client"
+
+# Fixes "no such module 'node:events'"
+compatibility_flags = [ "nodejs_compat" ]
+
+# Fixes "compatibility_flags cannot be specified without a compatibility_date"
+compatibility_date = "2024-04-18"
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "db"
+database_id = "16785b38-d796-4dde-b7a5-5d0392fc3881"
+migrations_dir="./app/drizzle/migrations"
+
+
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "artworks"
