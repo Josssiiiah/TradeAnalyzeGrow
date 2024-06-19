@@ -1,5 +1,4 @@
 import axios from "axios";
-import { doTheDBThing } from "../../lib/dbThing.tsx";
 import { trades } from "../../drizzle/schema.server.ts";
 import { Form } from "@remix-run/react";
 import { doTheAuthThing } from "lib/authThing.tsx";
