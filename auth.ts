@@ -16,6 +16,14 @@ interface DatabaseUserAttributes {
     username: string;
 }
 
+export interface Env {
+    GITHUB_CLIENT_ID : string;
+    GITHUB_CLIENT_SECRET : string;
+    GOOGLE_CLIENT_ID : string;
+    GOOGLE_CLIENT_SECRET : string;
+    GOOGLE_REDIRECT_URI : string;
+}
+
 
 // Sets up Lucia auth system with my SQLite database
 export function initializeLucia(D1: D1Database) {
@@ -38,10 +46,22 @@ export function initializeLucia(D1: D1Database) {
 }
 
 // Github provider from Arctic
-export const github = new GitHub(process.env.GITHUB_CLIENT_ID!, process.env.GITHUB_CLIENT_SECRET!);
+export const createGitHubProvider = (env: Env) => {
+   new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET);
+};
 
-const clientId = process.env.GOOGLE_CLIENT_ID!;
-const clientSecret = process.env.GOOGLE_CLIENT_SECRET!;
-const redirectURI = "http://localhost:5173/googleredirect";
+// Google provider from Arctic
+export const createGoogleProvider = (env: Env) => {
+   new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
+};
 
-export const google = new Google(clientId, clientSecret, redirectURI);
+
+
+// Github provider from Arctic
+// export const github = new GitHub(process.env.GITHUB_CLIENT_ID!, process.env.GITHUB_CLIENT_SECRET!);
+
+// const clientId = process.env.GOOGLE_CLIENT_ID!;
+// const clientSecret = process.env.GOOGLE_CLIENT_SECRET!;
+// const redirectURI = "http://localhost:5173/googleredirect";
+
+// export const google = new Google(clientId, clientSecret, redirectURI);

@@ -1,13 +1,18 @@
 import { LoaderFunction, redirect } from "@remix-run/cloudflare";
-import { google } from "auth"; // Ensure you have Google OAuth setup in auth
+import { Google, OAuth2RequestError } from "arctic";
 import { createCookie } from "@remix-run/cloudflare";
-import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
 import { initializeLucia } from "auth";
-import { parseCookies } from "oslo/cookie";
 import { Users } from "~/drizzle/schema.server";
 import { drizzle } from "drizzle-orm/d1";
 import { eq } from "drizzle-orm";
+
+interface Env {
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
+  GOOGLE_REDIRECT_URI: string;
+  DB: D1Database;
+}
 
 interface GoogleUser {
   sub: string;
@@ -26,7 +31,7 @@ const googleOAuthStateCookie = createCookie("google_oauth_state", {
   httpOnly: true,
   maxAge: 60 * 10,
   sameSite: "lax",
-  secure: process.env.NODE_ENV === "production"
+
 });
 
 const googleOAuthCodeVerifierCookie = createCookie("google_oauth_code_verifier", {
@@ -34,13 +39,19 @@ const googleOAuthCodeVerifierCookie = createCookie("google_oauth_code_verifier",
   httpOnly: true,
   maxAge: 60 * 10,
   sameSite: "lax",
-  secure: process.env.NODE_ENV === "production"
+
 });
 
-export const loader: LoaderFunction = async ({ request, context }) => {
-  const lucia = initializeLucia(context.cloudflare.env.DB);
-  const db = drizzle(context.cloudflare.env.DB);
+// Function to create Google provider
+const createGoogleProvider = (env: Env) => {
+  return new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
+};
 
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const env = context.env as Env; // Assuming env is passed in the context
+  const google = createGoogleProvider(env);
+  const lucia = initializeLucia(env.DB);
+  const db = drizzle(env.DB);
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
@@ -48,22 +59,20 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 
   // Retrieve the stored state and code_verifier from the cookies
   const cookieHeader = request.headers.get("Cookie");
-
-  const storedState = await googleOAuthStateCookie.parse(cookieHeader);
-  const codeVerifier = await googleOAuthCodeVerifierCookie.parse(cookieHeader);
+  const storedState = cookieHeader ? await googleOAuthStateCookie.parse(cookieHeader) : null;
+  const codeVerifier = cookieHeader ? await googleOAuthCodeVerifierCookie.parse(cookieHeader) : null;
 
   if (!code || !state || !storedState || state !== storedState) {
     console.error("Invalid code/state or state mismatch");
     return new Response(null, { status: 400 });
   }
 
-  if (!codeVerifier ) {
+  if (!codeVerifier) {
     console.error("No code verifier found in cookie");
     return new Response(null, { status: 400 });
   }
 
   try {
-
     const tokens = await google.validateAuthorizationCode(code, codeVerifier);
     const googleUserResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
       headers: {
@@ -89,8 +98,6 @@ export const loader: LoaderFunction = async ({ request, context }) => {
         }
       });
     }
-
-    
 
     const userId = generateIdFromEntropySize(10); // 16 characters long
 
