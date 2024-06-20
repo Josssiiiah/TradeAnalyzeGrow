@@ -1,9 +1,9 @@
 import { LoaderFunction, redirect } from "@remix-run/cloudflare";
-
+import { google } from "auth"; // Ensure you have Google OAuth setup in auth
 import { createCookie } from "@remix-run/cloudflare";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
-import { initializeLucia, initializeProviders } from "auth";
+import { initializeLucia } from "auth";
 import { parseCookies } from "oslo/cookie";
 import { Users } from "~/drizzle/schema.server";
 import { drizzle } from "drizzle-orm/d1";
@@ -40,8 +40,6 @@ const googleOAuthCodeVerifierCookie = createCookie("google_oauth_code_verifier",
 export const loader: LoaderFunction = async ({ request, context }) => {
   const lucia = initializeLucia(context.cloudflare.env.DB);
   const db = drizzle(context.cloudflare.env.DB);
-  const { google } = initializeProviders(context.env);
-
 
 
   const url = new URL(request.url);

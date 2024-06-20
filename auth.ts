@@ -38,9 +38,10 @@ export function initializeLucia(D1: D1Database) {
 }
 
 // Github provider from Arctic
-// Initialize providers with environment variables from context
-export function initializeProviders(env: any) {
-    const github = new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET);
-    const google = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
-    return { github, google };
-  }
+export const github = new GitHub(process.env.GITHUB_CLIENT_ID!, process.env.GITHUB_CLIENT_SECRET!);
+
+const clientId = process.env.GOOGLE_CLIENT_ID!;
+const clientSecret = process.env.GOOGLE_CLIENT_SECRET!;
+const redirectURI = "http://localhost:5173/googleredirect";
+
+export const google = new Google(clientId, clientSecret, redirectURI);

@@ -1,7 +1,7 @@
 // app/routes/auth/github.ts
 import { generateState } from "arctic";
 import { createCookie, LoaderFunction, redirect } from "@remix-run/cloudflare";
-
+import { github } from "auth";
 import { initializeProviders } from "auth";
 
 
@@ -15,8 +15,6 @@ const githubOAuthStateCookie = createCookie("github_oauth_state", {
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const state = generateState();
-  const { github } = initializeProviders(context.env);
-
   const url = await github.createAuthorizationURL(state);
   console.log("Girhub OAuth URL:", url);
 

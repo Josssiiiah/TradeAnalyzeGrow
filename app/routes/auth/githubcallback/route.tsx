@@ -1,9 +1,9 @@
 import { LoaderFunction, redirect } from "@remix-run/cloudflare";
-
+import { github } from "auth"; // Adjust the path as needed
 import { createCookie } from "@remix-run/cloudflare";
 import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
-import { initializeLucia, initializeProviders } from "auth";
+import { initializeLucia } from "auth";
 import { Users } from "~/drizzle/schema.server";
 import { drizzle } from "drizzle-orm/d1";
 import { eq } from "drizzle-orm";
@@ -24,8 +24,6 @@ const githubOAuthStateCookie = createCookie("github_oauth_state", {
 export const loader: LoaderFunction = async ({ request, context }) => {
   const db = drizzle(context.cloudflare.env.DB);
   const lucia = initializeLucia(context.cloudflare.env.DB);
-  const { github } = initializeProviders(context.env);
-
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
