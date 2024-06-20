@@ -1,22 +1,17 @@
 import { LoaderFunction, redirect } from "@remix-run/cloudflare";
-import { GitHub, OAuth2RequestError } from "arctic";
+
 import { createCookie } from "@remix-run/cloudflare";
+import { OAuth2RequestError } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
-import { initializeLucia } from "auth";
+import { initializeLucia, initializeProviders } from "auth";
 import { Users } from "~/drizzle/schema.server";
 import { drizzle } from "drizzle-orm/d1";
 import { eq } from "drizzle-orm";
 
-interface Env {
-  GITHUB_CLIENT_ID: string;
-  GITHUB_CLIENT_SECRET: string;
-  DB: D1Database;
-}
-
 interface GitHubUser {
   id: string;
   login: string;
-}
+};
 
 // Define the githubOAuthStateCookie
 const githubOAuthStateCookie = createCookie("github_oauth_state", {
@@ -26,16 +21,11 @@ const githubOAuthStateCookie = createCookie("github_oauth_state", {
   sameSite: "lax"
 });
 
-// Function to create GitHub provider
-const createGitHubProvider = (env: Env) => {
-  return new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET);
-};
-
 export const loader: LoaderFunction = async ({ request, context }) => {
-  const env = context.env as Env; // Assuming env is passed in the context
-  const github = createGitHubProvider(env);
-  const db = drizzle(env.DB);
-  const lucia = initializeLucia(env.DB);
+  const db = drizzle(context.cloudflare.env.DB);
+  const lucia = initializeLucia(context.cloudflare.env.DB);
+  const { github } = initializeProviders(context.env);
+
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
@@ -43,7 +33,10 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 
   // Retrieve the stored state from the cookie using githubOAuthStateCookie
   const cookieHeader = request.headers.get("Cookie");
-  const storedState = cookieHeader ? await githubOAuthStateCookie.parse(cookieHeader) : null;
+
+  const storedState = cookieHeader
+    ? await githubOAuthStateCookie.parse(cookieHeader)
+    : null;
 
   if (!code || !state || !storedState || state !== storedState) {
     console.error("Invalid code/state or state mismatch");
@@ -60,11 +53,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     const githubUser: GitHubUser = await githubUserResponse.json();
 
     // Check if user already exists
-    const [existingUser] = await db
-      .select()
-      .from(Users)
-      .where(eq(Users.github_id, githubUser.id))
-      .execute();
+    const [existingUser] = await db.select().from(Users).where(eq(Users.github_id, githubUser.id)).execute();
 
     if (existingUser) {
       const session = await lucia.createSession(existingUser.id, {});
@@ -79,14 +68,11 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     const userId = generateIdFromEntropySize(10); // 16 characters long
 
     // Insert new user into the database
-    await db
-      .insert(Users)
-      .values({
-        id: userId,
-        github_id: githubUser.id,
-        username: githubUser.login
-      })
-      .execute();
+    await db.insert(Users).values({
+      id: userId,
+      github_id: githubUser.id,
+      username: githubUser.login
+    }).execute();
 
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
@@ -108,4 +94,4 @@ export const loader: LoaderFunction = async ({ request, context }) => {
 export default function Callback() {
   console.log("Component rendered");
   return <div>Hello</div>;
-}
+};
