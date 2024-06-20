@@ -125,6 +125,3 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   }
 };
 
-export default function Callback() {
-  return <div>Hello</div>;
-}

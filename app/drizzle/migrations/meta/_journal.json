@@ -232,6 +232,48 @@
       "when": 1718816942954,
       "tag": "0032_public_ben_parker",
       "breakpoints": true
+    },
+    {
+      "idx": 33,
+      "version": "5",
+      "when": 1718860646610,
+      "tag": "0033_tired_pete_wisdom",
+      "breakpoints": true
+    },
+    {
+      "idx": 34,
+      "version": "5",
+      "when": 1718860725571,
+      "tag": "0034_old_thanos",
+      "breakpoints": true
+    },
+    {
+      "idx": 35,
+      "version": "5",
+      "when": 1718860756066,
+      "tag": "0035_new_orphan",
+      "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "5",
+      "when": 1718860769017,
+      "tag": "0036_lean_red_skull",
+      "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "5",
+      "when": 1718860787213,
+      "tag": "0037_sour_sumo",
+      "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "5",
+      "when": 1718860807599,
+      "tag": "0038_overjoyed_king_cobra",
+      "breakpoints": true
     }
   ]
 }
