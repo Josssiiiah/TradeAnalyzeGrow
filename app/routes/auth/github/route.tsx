@@ -2,7 +2,7 @@
 import { generateState } from "arctic";
 import { createCookie, LoaderFunction, redirect } from "@remix-run/cloudflare";
 import { github } from "auth";
-import { initializeProviders } from "auth";
+
 
 
 // Define the cookie
