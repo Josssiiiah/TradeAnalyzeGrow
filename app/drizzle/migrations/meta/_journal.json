@@ -274,6 +274,20 @@
       "when": 1718860807599,
       "tag": "0038_overjoyed_king_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 39,
+      "version": "5",
+      "when": 1718920288120,
+      "tag": "0039_silent_weapon_omega",
+      "breakpoints": true
+    },
+    {
+      "idx": 40,
+      "version": "5",
+      "when": 1718920298818,
+      "tag": "0040_reflective_sunspot",
+      "breakpoints": true
     }
   ]
 }

@@ -42,6 +42,9 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const db = drizzle(context.cloudflare.env.DB);
 
   const { env }: any= context.cloudflare;
+  console.log("Google Cliient ID:", env.GOOGLE_CLIENT_ID);
+  console.log("Google Cliient Secret:", env.GOOGLE_CLIENT_SECRET);
+  console.log("Google Redirect URI:", env.GOOGLE_REDIRECT_URI);
   const google = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
 
   const url = new URL(request.url);
@@ -125,3 +128,6 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   }
 };
 
+export default function Callback() {
+  return <div>Hello</div>;
+}
