@@ -1,7 +1,7 @@
 import { LoaderFunction, redirect } from "@remix-run/cloudflare";
-import { google } from "auth"; // Ensure you have Google OAuth setup in auth
+// import { google } from "auth"; // Ensure you have Google OAuth setup in auth
 import { createCookie } from "@remix-run/cloudflare";
-import { OAuth2RequestError } from "arctic";
+import { OAuth2RequestError, Google } from "arctic";
 import { generateIdFromEntropySize } from "lucia";
 import { initializeLucia } from "auth";
 import { parseCookies } from "oslo/cookie";
@@ -41,6 +41,8 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const lucia = initializeLucia(context.cloudflare.env.DB);
   const db = drizzle(context.cloudflare.env.DB);
 
+  const { env }: any= context.cloudflare;
+  const google = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");

@@ -1,7 +1,7 @@
 import { LoaderFunction, redirect } from "@remix-run/cloudflare";
 import { createCookie } from "@remix-run/cloudflare";
-import { google } from "auth"; // Ensure you have Google OAuth setup in auth
-import { generateCodeVerifier, generateState } from "arctic";
+// import { google } from "auth"; // Ensure you have Google OAuth setup in auth
+import { generateCodeVerifier, generateState, Google } from "arctic";
 
 // Define the cookies
 const googleOAuthStateCookie = createCookie("google_oauth_state", {
@@ -18,9 +18,11 @@ const googleOAuthCodeVerifierCookie = createCookie("google_oauth_code_verifier",
   sameSite: "lax",
 });
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
+  const { env }: any= context.cloudflare;
+  const google = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
 
   const url = await google.createAuthorizationURL(state, codeVerifier, {
     scopes: ["profile", "email"]
