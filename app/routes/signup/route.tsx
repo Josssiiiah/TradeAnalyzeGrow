@@ -114,7 +114,7 @@ export async function action({ context, request }: ActionFunctionArgs) {
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
 
-  return redirect("/app/select", {
+  return redirect("/app/profile", {
     headers: {
       "Set-Cookie": sessionCookie.serialize(),
     },

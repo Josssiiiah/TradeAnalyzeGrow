@@ -103,7 +103,7 @@ export default function Profile() {
         </div>
 
         <div className="flex-1 w-full max-w-xl pt-2">
-        <h1 className="py-6 font-bold text-red-500">To see trading info, log into Robinhood and import trades</h1>
+        <h1 className="py-6 font-bold text-red-500"> Log into Robinhood to import trades. Your credentials are used to make the request, then discarded. They are not stored at any time. </h1>
 
           <Form method="post" className="space-y-6" onSubmit={handleSubmit}>
             <div>

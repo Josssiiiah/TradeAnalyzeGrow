@@ -34,7 +34,7 @@ export default function Index() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100  items-center text-center text-gray-800">
-      <div className="flex flex-row pt-24 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
+      <div className="flex flex-row pt-6 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
         <h1 className="text-xl font-bold">[BETA]</h1>
         <div className="flex flex-row gap-6">
           <Link
