@@ -37,21 +37,19 @@ export default function Index() {
       <div className="flex flex-row pt-24 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
         <h1 className="text-xl font-bold">[BETA]</h1>
         <div className="flex flex-row gap-6">
-        <Link
-          to="/login"
-          className="px-4 py-2 rounded bg-black text-white font-medium hover:bg-gray-600"
-        >
-          Login
-        </Link>
-        <Link
+          <Link
+            to="/login"
+            className="px-4 py-2 rounded bg-black text-white font-medium hover:bg-gray-600"
+          >
+            Login
+          </Link>
+          {/* <Link
           to="/logout"
           className="px-4 py-2 rounded bg-red-500 text-white font-medium hover:bg-red-200"
         >
           Logout
-        </Link>
+        </Link> */}
         </div>
-      
-        
       </div>
 
       <div className="flex flex-col items-center justify-center">

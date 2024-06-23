@@ -6,7 +6,7 @@ import {
   flexRender,
   createColumnHelper,
 } from "@tanstack/react-table";
-import { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import { LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { trades } from "~/drizzle/schema.server";
 import { doTheAuthThing } from "lib/authThing";
 import { eq } from "drizzle-orm/expressions";
