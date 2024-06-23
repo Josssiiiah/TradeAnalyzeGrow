@@ -5,17 +5,15 @@ import {
   MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
-import { Form, Link, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
 import { drizzle } from "drizzle-orm/d1";
 import { initializeLucia } from "auth";
 import { Users } from "~/drizzle/schema.server";
 import { sql } from "drizzle-orm";
-import { Button } from "~/components/ui/button";
+import { useToast } from "~/components/ui/use-toast";
+import { useEffect } from "react";
 
-export const meta: MetaFunction = () => {
-  return [{ title: "Login" }];
-};
-
+ 
 export async function loader({ context }: LoaderFunctionArgs) {
   if (context.session) {
     throw redirect("/");
@@ -26,6 +24,18 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
 export default function LoginRoute() {
   const actionData = useActionData<typeof action>();
+  const navigation = useNavigation();
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (actionData?.error) {
+      toast({
+        title: "Error",
+        description: actionData.error,
+        variant: "destructive",
+      });
+    }
+  }, [actionData, toast]);
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
@@ -59,37 +69,33 @@ export default function LoginRoute() {
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
             />
           </div>
-          {actionData?.error && (
-            <p className="text-red-500">{actionData.error}</p>
-          )}
           <button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            disabled={navigation.state === "submitting"}
           >
-            Continue
+            {navigation.state === "submitting" ? "Logging in..." : "Continue"}
           </button>
         </Form>
-        <h1>Login with GitHub</h1>
-        <Button>
-          <a href="/github">Sign in with GitHub</a>
-        </Button>
-        <h1>Login with Google</h1>
-        <Button>
-          <a href="/google">Sign in with Google</a>
-        </Button>
-
+       
+        <Link to="/google" className="px-4 py-2 mt-10 border flex gap-2 rounded-lg bg-white text-black hover:bg-gray-100 transition duration-150">
+        <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
+        <span>Sign in with Google</span>
+        </Link>
+{/* 
         <div className="mt-4">
           <Link to="/signup" className="text-blue-500 hover:underline">
             Sign up
           </Link>
-        </div>
+        </div> */}
       </div>
-      <Link to="/" className="mt-4 text-blue-500 hover:underline">
+      <Link to="/" className="mt-4 text-black hover:text-gray-500">
         Back to home
       </Link>
     </div>
   );
 }
+
 
 export async function action({ context, request }: ActionFunctionArgs) {
   const db = drizzle(context.cloudflare.env.DB);
@@ -128,9 +134,9 @@ export async function action({ context, request }: ActionFunctionArgs) {
     .where(sql`${Users.username} = ${username}`)
     .execute();
 
-  if (!existingUser) {
+  if (!existingUser || existingUser.length === 0) {
     return json({
-      error: "Incorrect username or password",
+      error: "User not found",
     });
   }
 
@@ -143,7 +149,7 @@ export async function action({ context, request }: ActionFunctionArgs) {
   const session = await lucia.createSession(existingUser[0].id, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
 
-  return redirect("/", {
+  return redirect("/app/profile", {
     headers: {
       "Set-Cookie": sessionCookie.serialize(),
     },

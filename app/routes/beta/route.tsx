@@ -34,24 +34,22 @@ export default function Index() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100  items-center text-center text-gray-800">
-      <div className="flex flex-row pt-24 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
+      <div className="flex flex-row pt-6 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
         <h1 className="text-xl font-bold">[BETA]</h1>
         <div className="flex flex-row gap-6">
-        <Link
-          to="/login"
-          className="px-4 py-2 rounded bg-black text-white font-medium hover:bg-gray-600"
-        >
-          Login
-        </Link>
-        <Link
+          <Link
+            to="/login"
+            className="px-4 py-2 rounded bg-black text-white font-medium hover:bg-gray-600"
+          >
+            Login
+          </Link>
+          {/* <Link
           to="/logout"
           className="px-4 py-2 rounded bg-red-500 text-white font-medium hover:bg-red-200"
         >
           Logout
-        </Link>
+        </Link> */}
         </div>
-      
-        
       </div>
 
       <div className="flex flex-col items-center justify-center">
@@ -68,7 +66,7 @@ export default function Index() {
             better trader.
           </span>
         </p>
-        <Form method="post" className="space-y-4">
+        {/* <Form method="post" className="space-y-4">
           <div className="flex flex-col md:flex-row gap-4 md:gap-10 justify-center items-center w-full max-w-sm md:max-w-xl pt-10">
             <Input
               name="email"
@@ -83,9 +81,9 @@ export default function Index() {
               Join the waitlist!
             </Button>
           </div>
-        </Form>
+        </Form> */}
 
-        <div className="pt-10 mx-8 md:mx-20 flex">
+        <div className="pt-16 mx-8 md:mx-20 flex">
           <img
             src="/dashboard.png"
             alt="Dashboard"

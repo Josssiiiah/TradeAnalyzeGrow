@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useToast } from "~/components/ui/use-toast";
+import { Input } from "~/components/ui/input";
 
 type ActionData = { error?: string; success?: string };
 
@@ -41,7 +42,6 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 
 export default function Profile() {
   const data = useLoaderData<typeof loader>();
-  const actionData = useActionData<ActionData>();
   const fetcher = useFetcher<typeof action>();
   const { toast } = useToast();
 
@@ -64,7 +64,7 @@ export default function Profile() {
       fetcher.submit(formData, { action: "/app/seed", method: "post" });
       toast({
         title: "Success",
-        description: "Seed database successfully",
+        description: "Imported trades successfully",
       });
     }
   }, [fetcher.data]);
@@ -76,84 +76,89 @@ export default function Profile() {
   };
 
   return (
-    <div className="items-left items-center flex mx-auto max-w-[2000px] w-full flex-col gap-8 p-10 bg-gray-200">
+    <div className="flex flex-col mx-auto max-w-[1400px] w-full p-10">
       <h1 className="text-4xl font-bold text-center">Profile</h1>
-      <div className="flex flex-col items-left max-w-xl w-full">
-        {user.avatar_url && (
-          <div className="flex justify-center mb-4">
-            <img
-              className="w-32 h-32 rounded-full"
-              src={user.avatar_url}
-              alt={`${user.username}'s avatar`}
-            />
+      <div className="flex flex-col pt-10 items-center justify-between w-full">
+        <div className="flex flex-col w-1/3">
+          <div className="flex flex-col items-center mb-6">
+            {user.avatar_url ? (
+              <img
+                className="w-32 h-32 rounded-full mb-4"
+                src={user.avatar_url}
+                alt={`${user.username}'s avatar`}
+              />
+            ) : (
+              <div className="w-32 h-32 rounded-full bg-black text-white flex items-center justify-center mb-4">
+                <span className="text-4xl">
+                  {user.username[0].toUpperCase()}
+                </span>
+              </div>
+            )}
+            <h2 className="text-2xl font-bold">{user.username}</h2>
           </div>
-        )}
-        <div className="space-y-2 mb-4">
-          <p>
-            <span className="font-semibold">Username:</span> {user.username}
-          </p>
-          <p>
-            <span className="font-semibold">Email:</span> {user.email}
-          </p>
+          {/* <button className="bg-purple-600 text-white py-2 px-4 rounded-md mb-2">
+        Update image
+      </button>
+      <button className="text-purple-400 mb-4">Remove image</button> */}
         </div>
 
-        {actionData?.error && (
-          <div className="mb-4 text-red-500">{actionData.error}</div>
-        )}
-        {actionData?.success && (
-          <div className="mb-4 text-green-500">{actionData.success}</div>
-        )}
+        <div className="flex-1 w-full max-w-xl pt-2">
+        <h1 className="py-6 font-bold text-red-500"> Log into Robinhood to import trades. Your credentials are used to make the request, then discarded. They are not stored at any time. </h1>
 
-        <Form method="post" className="space-y-4 pt-20" onSubmit={handleSubmit}>
-          <div>
-            <label
-              htmlFor="username"
-              className="block font-medium text-gray-700"
+          <Form method="post" className="space-y-6" onSubmit={handleSubmit}>
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium text-gray-800 mb-1"
+              >
+                Robinhood Username
+              </label>
+              <Input
+                type="text"
+                name="username"
+                id="username"
+                className="w-full px-3 py-2 border border-gray-700 rounded-md focus:outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-800 mb-1"
+              >
+                Robinhood Password
+              </label>
+              <Input
+                type="password"
+                name="password"
+                id="password"
+                className="w-full px-3 py-2 border border-gray-700 rounded-md focus:outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="mfa"
+                className="block text-sm font-medium text-gray-800 mb-1"
+              >
+                MFA Code
+              </label>
+              <Input
+                type="text"
+                name="mfa"
+                id="mfa"
+                className="w-full px-3 py-2 border border-gray-700 rounded-md focus:outline-none"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-700"
             >
-              Robinhood Username
-            </label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block font-medium text-gray-700"
-            >
-              Robinhood Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="mfa" className="block font-medium text-gray-700">
-              MFA Code
-            </label>
-            <input
-              type="text"
-              name="mfa"
-              id="mfa"
-              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-black hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Import Trades
-          </button>
-        </Form>
+              Import Trades
+            </button>
+          </Form>
+        </div>
       </div>
     </div>
   );
@@ -200,13 +205,13 @@ export const action = async ({ request, context }: LoaderFunctionArgs) => {
     const response = await axios(options);
     const authToken = response.data.access_token;
 
-    const { user, db } = await doTheAuthThing({ request, context });
+    // const { user, db } = await doTheAuthThing({ request, context });
 
-    await db
-      .update(Users)
-      .set({ auth_token: authToken })
-      .where(eq(Users.id, user!.id))
-      .execute();
+    // await db
+    //   .update(Users)
+    //   .set({ auth_token: authToken })
+    //   .where(eq(Users.id, user!.id))
+    //   .execute();
 
     return json<ActionData>({ success: authToken });
   } catch (error) {

@@ -1,8 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { json, useLoaderData } from "@remix-run/react";
-import { LoaderFunctionArgs } from "@remix-run/cloudflare";
+import {
+  isRouteErrorResponse,
+  json,
+  useLoaderData,
+  useRouteError,
+} from "@remix-run/react";
+import { LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { Google } from "arctic"; // Ensure this is correctly imported
-import { doTheDbThing } from "lib/dbThing";
 import { trades } from "../../drizzle/schema.server";
 import { doTheAuthThing } from "lib/authThing";
 import {
@@ -13,7 +17,6 @@ import {
   DoughnutController,
 } from "chart.js";
 import { eq } from "drizzle-orm/expressions";
-import { Button } from "~/components/ui/button";
 import Calendar from "./calendar";
 import Recent from "./recent";
 
@@ -120,6 +123,11 @@ function transformData(resourceList: any[]): {
 export async function loader({ request, context }: LoaderFunctionArgs) {
   const { db, user } = await doTheAuthThing({ request, context } as any);
 
+  if (!user) {
+    // Instead of throwing, we'll return a specific response
+    return json({ error: "User not authenticated" }, { status: 401 });
+  }
+
   const resourceList = await db
     .select({
       id: trades.id,
@@ -173,6 +181,18 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 }
 
 export default function Dashboard() {
+  const data = useLoaderData<typeof loader>();
+  console.log("DATA DATA", data);
+
+  // Check if the data contains an error
+  if ("error" in data) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-200">
+        <div className="text-2xl font-bold text-center">{data.error}</div>
+      </div>
+    );
+  }
+
   const {
     tradeList,
     netProfitLoss,
@@ -183,7 +203,7 @@ export default function Dashboard() {
     positiveTrades,
     breakEvenTrades,
     negativeTrades,
-  } = useLoaderData<typeof loader>();
+  } = data;
 
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstance = useRef<Chart<"doughnut"> | null>(null);

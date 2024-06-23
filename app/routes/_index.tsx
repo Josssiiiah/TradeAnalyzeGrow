@@ -68,7 +68,7 @@ export default function Index() {
       </div> */}
 
       <div className="flex flex-col items-center justify-center">
-        <h1 className="font-[Inter-bold] text-5xl md:text-7xl max-w-sm md:max-w-6xl leading-[1.2] font-bold mb-4 pt-24 md:pt-[160px]">
+        <h1 className="font-[Inter-bold] text-5xl md:text-7xl max-w-sm md:max-w-6xl leading-[1.2] font-bold mb-4 pt-24 md:pt-[140px]">
           Automate your trading journal
         </h1>
 
