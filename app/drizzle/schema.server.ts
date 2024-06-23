@@ -1,20 +1,5 @@
 import { sqliteTable, text, integer, blob } from "drizzle-orm/sqlite-core";
 
-export const resources = sqliteTable("resources", {
-  id: integer("id").primaryKey(),
-  title: text("title").notNull(),
-  href: text("href").notNull(),
-});
-
-export const students = sqliteTable("students", {
-  id: integer("id").primaryKey(),
-  name: text("name"),
-  category: text("category"),
-  description: text("description"),
-  image_url: text("image_url"),
-});
-
-
 export const trades = sqliteTable("trades", {
   id: integer("id").primaryKey(),
   user_id: text("user_id"),
@@ -26,7 +11,6 @@ export const trades = sqliteTable("trades", {
   largestLoss: integer("largestLoss").notNull(),
   trades: blob("trades").notNull(),
 });
- 
 
 // Auth
 export const Users = sqliteTable("Users", {
@@ -44,4 +28,10 @@ export const session = sqliteTable("session", {
   id: text("id").primaryKey(),
   user_id: text("user_id").notNull(),
   expires_at: integer("expires_at").notNull(),
+});
+
+// Waitlist
+export const waitlist = sqliteTable("waitlist", {
+  id: integer("id").primaryKey(),
+  email: text("email").notNull(),
 });

@@ -33,42 +33,19 @@ export default function Index() {
   }, [response, toast]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center text-center text-gray-800">
-      {/* <div className="flex flex-row gap-12 pt-48">
+    <div className="flex flex-col min-h-screen bg-gray-100  items-center text-center text-gray-800">
+      <div className="flex flex-row pt-24 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
+        <h1 className="text-xl font-bold">[BETA]</h1>
         <Link
           to="/login"
-          className="px-4 py-2 rounded bg-blue-500 text-white font-medium hover:bg-blue-600"
+          className="px-4 py-2 rounded bg-black text-white font-medium hover:bg-blue-600"
         >
           Login
         </Link>
-        <Link
-          to="/signup"
-          className="px-4 py-2 rounded bg-green-500 text-white font-medium hover:bg-green-600"
-        >
-          Sign Up
-        </Link>
-        <Link
-          to="/logout"
-          className="px-4 py-2 rounded bg-red-500 text-white font-medium hover:bg-red-600"
-        >
-          Logout
-        </Link>
-        <Link
-          to="/protected"
-          className="px-4 py-2 rounded bg-black text-white font-medium hover:bg-gray-600"
-        >
-          Protected
-        </Link>
-        <Link
-          to="/app"
-          className="px-4 py-2 rounded bg-purple-500 text-white font-medium hover:bg-purple-600"
-        >
-          App
-        </Link>
-      </div> */}
+      </div>
 
       <div className="flex flex-col items-center justify-center">
-        <h1 className="font-[Inter-bold] text-5xl md:text-7xl max-w-sm md:max-w-6xl leading-[1.2] font-bold mb-4 pt-24 md:pt-[160px]">
+        <h1 className="font-[Inter-bold] pt-20 text-5xl md:text-7xl max-w-sm md:max-w-6xl leading-[1.2] font-bold mb-4 ">
           Automate your trading journal
         </h1>
 

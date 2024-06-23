@@ -26,26 +26,33 @@ const googleOAuthStateCookie = createCookie("google_oauth_state", {
   httpOnly: true,
   maxAge: 60 * 10,
   sameSite: "lax",
-  secure: process.env.NODE_ENV === "production"
+  secure: process.env.NODE_ENV === "production",
 });
 
-const googleOAuthCodeVerifierCookie = createCookie("google_oauth_code_verifier", {
-  path: "/",
-  httpOnly: true,
-  maxAge: 60 * 10,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production"
-});
+const googleOAuthCodeVerifierCookie = createCookie(
+  "google_oauth_code_verifier",
+  {
+    path: "/",
+    httpOnly: true,
+    maxAge: 60 * 10,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  }
+);
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const lucia = initializeLucia(context.cloudflare.env.DB);
   const db = drizzle(context.cloudflare.env.DB);
 
-  const { env }: any= context.cloudflare;
+  const { env }: any = context.cloudflare;
   console.log("Google Cliient ID:", env.GOOGLE_CLIENT_ID);
   console.log("Google Cliient Secret:", env.GOOGLE_CLIENT_SECRET);
   console.log("Google Redirect URI:", env.GOOGLE_REDIRECT_URI);
-  const google = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, env.GOOGLE_REDIRECT_URI);
+  const google = new Google(
+    env.GOOGLE_CLIENT_ID,
+    env.GOOGLE_CLIENT_SECRET,
+    env.GOOGLE_REDIRECT_URI
+  );
 
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
@@ -62,19 +69,21 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     return new Response(null, { status: 400 });
   }
 
-  if (!codeVerifier ) {
+  if (!codeVerifier) {
     console.error("No code verifier found in cookie");
     return new Response(null, { status: 400 });
   }
 
   try {
-
     const tokens = await google.validateAuthorizationCode(code, codeVerifier);
-    const googleUserResponse = await fetch("https://openidconnect.googleapis.com/v1/userinfo", {
-      headers: {
-        Authorization: `Bearer ${tokens.accessToken}`
+    const googleUserResponse = await fetch(
+      "https://openidconnect.googleapis.com/v1/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${tokens.accessToken}`,
+        },
       }
-    });
+    );
     const googleUser: GoogleUser = await googleUserResponse.json();
 
     // Check if user already exists
@@ -88,14 +97,12 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     if (existingUser) {
       const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
-      return redirect("/", {
+      return redirect("/app/profile", {
         headers: {
-          "Set-Cookie": await sessionCookie.serialize()
-        }
+          "Set-Cookie": await sessionCookie.serialize(),
+        },
       });
     }
-
-    
 
     const userId = generateIdFromEntropySize(10); // 16 characters long
 
@@ -107,16 +114,16 @@ export const loader: LoaderFunction = async ({ request, context }) => {
         google_id: googleUser.sub,
         username: googleUser.name,
         email: googleUser.email,
-        avatar_url: googleUser.picture
+        avatar_url: googleUser.picture,
       })
       .execute();
 
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    return redirect("/", {
+    return redirect("/app/profile", {
       headers: {
-        "Set-Cookie": await sessionCookie.serialize()
-      }
+        "Set-Cookie": await sessionCookie.serialize(),
+      },
     });
   } catch (e) {
     if (e instanceof OAuth2RequestError) {

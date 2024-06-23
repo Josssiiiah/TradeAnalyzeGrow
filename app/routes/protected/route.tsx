@@ -6,7 +6,6 @@ import {
 } from "@remix-run/cloudflare";
 import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
 import { drizzle } from "drizzle-orm/d1";
-import { resources } from "app/drizzle/schema.server";
 import { useToast } from "~/components/ui/use-toast";
 import { doTheAuthThing } from "lib/authThing";
 import { useEffect, useRef } from "react";
@@ -19,12 +18,11 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   // now you just have to condition all these queires on the user id
   if (user) {
     const userId = user.id;
-    console.log("LOGGED IN!!")
-    return(true);
-
+    console.log("LOGGED IN!!");
+    return true;
   } else {
     console.log("NOT LOGGED IN!!");
-    return(false);
+    return false;
   }
 }
 
@@ -42,8 +40,5 @@ export default function Protected() {
     });
   }
 
-  return (
-    <div className="flex items-center justify-center">
-    </div>
-  );
+  return <div className="flex items-center justify-center"></div>;
 }

@@ -288,6 +288,83 @@
       "when": 1718920298818,
       "tag": "0040_reflective_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 41,
+      "version": "5",
+      "when": 1718985221463,
+      "tag": "0041_perpetual_justice",
+      "breakpoints": true
+    },
+    {
+      "idx": 42,
+      "version": "5",
+      "when": 1718990504986,
+      "tag": "0042_steady_stryfe",
+      "breakpoints": true
+    },
+    {
+      "idx": 43,
+      "version": "5",
+      "when": 1718990537598,
+      "tag": "0043_wonderful_smiling_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 44,
+      "version": "5",
+      "when": 1718990571713,
+      "tag": "0044_early_blob",
+      "breakpoints": true
+    },
+    {
+      "idx": 45,
+      "version": "5",
+      "when": 1718990619176,
+      "tag": "0045_watery_the_professor",
+      "breakpoints": true
+    },
+    {
+      "idx": 46,
+      "version": "5",
+      "when": 1718990628167,
+      "tag": "0046_pink_adam_destine",
+      "breakpoints": true
+    },
+    {
+      "idx": 47,
+      "version": "5",
+      "when": 1718990655882,
+      "tag": "0047_aromatic_jocasta",
+      "breakpoints": true
+    },
+    {
+      "idx": 48,
+      "version": "5",
+      "when": 1718990692194,
+      "tag": "0048_lucky_ser_duncan",
+      "breakpoints": true
+    },
+    {
+      "idx": 49,
+      "version": "5",
+      "when": 1718990723585,
+      "tag": "0049_cultured_the_call",
+      "breakpoints": true
+    },
+    {
+      "idx": 50,
+      "version": "5",
+      "when": 1718990744746,
+      "tag": "0050_married_warbird",
+      "breakpoints": true
+    },
+    {
+      "idx": 51,
+      "version": "5",
+      "when": 1718990769771,
+      "tag": "0051_kind_taskmaster",
+      "breakpoints": true
     }
   ]
 }

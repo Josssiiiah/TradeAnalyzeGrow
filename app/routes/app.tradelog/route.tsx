@@ -9,8 +9,7 @@ import {
 import { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { trades } from "~/drizzle/schema.server";
 import { doTheAuthThing } from "lib/authThing";
-import {eq} from "drizzle-orm/expressions"
-
+import { eq } from "drizzle-orm/expressions";
 
 // Define the type for the trade data
 type Trade = {
@@ -34,7 +33,7 @@ type LoaderData = {
 // -----------------------------------------------------------------------------
 
 export async function loader({ request, context }: LoaderFunctionArgs) {
-  const { user, db } = await doTheAuthThing({ request,context } as any);
+  const { user, db } = await doTheAuthThing({ request, context } as any);
 
   const resourceList = await db
     .select({
