@@ -7,7 +7,6 @@ import {
 } from "@remix-run/react";
 import { LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { Google } from "arctic"; // Ensure this is correctly imported
-import { doTheDbThing } from "lib/dbThing";
 import { trades } from "../../drizzle/schema.server";
 import { doTheAuthThing } from "lib/authThing";
 import {
@@ -18,7 +17,6 @@ import {
   DoughnutController,
 } from "chart.js";
 import { eq } from "drizzle-orm/expressions";
-import { Button } from "~/components/ui/button";
 import Calendar from "./calendar";
 import Recent from "./recent";
 
@@ -184,10 +182,10 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 
 export default function Dashboard() {
   const data = useLoaderData<typeof loader>();
+  console.log("DATA DATA", data);
 
   // Check if the data contains an error
   if ("error" in data) {
-    redirect("/login");
     return (
       <div className="flex items-center justify-center h-screen bg-gray-200">
         <div className="text-2xl font-bold text-center">{data.error}</div>

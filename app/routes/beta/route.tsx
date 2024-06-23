@@ -66,7 +66,7 @@ export default function Index() {
             better trader.
           </span>
         </p>
-        <Form method="post" className="space-y-4">
+        {/* <Form method="post" className="space-y-4">
           <div className="flex flex-col md:flex-row gap-4 md:gap-10 justify-center items-center w-full max-w-sm md:max-w-xl pt-10">
             <Input
               name="email"
@@ -81,9 +81,9 @@ export default function Index() {
               Join the waitlist!
             </Button>
           </div>
-        </Form>
+        </Form> */}
 
-        <div className="pt-10 mx-8 md:mx-20 flex">
+        <div className="pt-16 mx-8 md:mx-20 flex">
           <img
             src="/dashboard.png"
             alt="Dashboard"

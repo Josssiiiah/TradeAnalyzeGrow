@@ -42,7 +42,6 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 
 export default function Profile() {
   const data = useLoaderData<typeof loader>();
-  const actionData = useActionData<ActionData>();
   const fetcher = useFetcher<typeof action>();
   const { toast } = useToast();
 
@@ -79,7 +78,7 @@ export default function Profile() {
   return (
     <div className="flex flex-col mx-auto max-w-[1400px] w-full p-10">
       <h1 className="text-4xl font-bold text-center">Profile</h1>
-      <div className="flex flex-col pt-20 items-center justify-between w-full">
+      <div className="flex flex-col pt-10 items-center justify-between w-full">
         <div className="flex flex-col w-1/3">
           <div className="flex flex-col items-center mb-6">
             {user.avatar_url ? (
@@ -103,7 +102,9 @@ export default function Profile() {
       <button className="text-purple-400 mb-4">Remove image</button> */}
         </div>
 
-        <div className="flex-1 w-full max-w-xl">
+        <div className="flex-1 w-full max-w-xl pt-2">
+        <h1 className="py-6 font-bold text-red-500">To see trading info, log into Robinhood and import trades</h1>
+
           <Form method="post" className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
@@ -204,13 +205,13 @@ export const action = async ({ request, context }: LoaderFunctionArgs) => {
     const response = await axios(options);
     const authToken = response.data.access_token;
 
-    const { user, db } = await doTheAuthThing({ request, context });
+    // const { user, db } = await doTheAuthThing({ request, context });
 
-    await db
-      .update(Users)
-      .set({ auth_token: authToken })
-      .where(eq(Users.id, user!.id))
-      .execute();
+    // await db
+    //   .update(Users)
+    //   .set({ auth_token: authToken })
+    //   .where(eq(Users.id, user!.id))
+    //   .execute();
 
     return json<ActionData>({ success: authToken });
   } catch (error) {
