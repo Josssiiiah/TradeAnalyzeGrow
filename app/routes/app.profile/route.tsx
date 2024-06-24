@@ -66,6 +66,12 @@ export default function Profile() {
         title: "Success",
         description: "Imported trades successfully",
       });
+    } else if (fetcher.data && fetcher.data.error) {
+      toast({
+        title: "Error",
+        description: fetcher.data.error,
+        variant: "destructive",
+      });
     }
   }, [fetcher.data]);
 
@@ -215,9 +221,9 @@ export const action = async ({ request, context }: LoaderFunctionArgs) => {
 
     return json<ActionData>({ success: authToken });
   } catch (error) {
-    console.error("Error retrieving auth token:", error);
+    console.error("Error retrieving auth token:");
     return json<ActionData>(
-      { error: "Failed to retrieve auth token" },
+      { error: "Failed to retrieve auth token, check login details" },
       { status: 500 }
     );
   }
