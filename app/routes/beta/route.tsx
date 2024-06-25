@@ -35,7 +35,7 @@ export default function Index() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-100  items-center text-center text-gray-800">
       <div className="flex flex-row pt-6 max-w-sm md:max-w-6xl px-6 w-full items-center justify-between">
-        <h1 className="text-xl font-bold">[BETA]</h1>
+        <h1 className="text-xl font-bold font-[Inter-bold]">TradeAnalyzeGrow [BETA]</h1>
         <div className="flex flex-row gap-6">
           <Link
             to="/login"
@@ -53,7 +53,7 @@ export default function Index() {
       </div>
 
       <div className="flex flex-col items-center justify-center">
-        <h1 className="font-[Inter-bold] pt-20 text-5xl md:text-7xl max-w-sm md:max-w-6xl leading-[1.2] font-bold mb-4 ">
+        <h1 className="font-[Inter-bold] pt-14 text-5xl md:text-7xl max-w-sm md:max-w-6xl leading-[1.2] font-bold mb-4 ">
           Automate your trading journal
         </h1>
 
