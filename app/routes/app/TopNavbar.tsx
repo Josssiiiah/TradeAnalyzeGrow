@@ -57,7 +57,7 @@ export function TopNavbar() {
             Journals
           </NavLink>
         </li> */}
-        <li>
+        {/* <li>
           <NavLink
             to="/app/seed"
             className={({ isActive }) =>
@@ -68,7 +68,7 @@ export function TopNavbar() {
           >
             Seed
           </NavLink>
-        </li>
+        </li> */}
       </ul>
       <ul>
         <li>
