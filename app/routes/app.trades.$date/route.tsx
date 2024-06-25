@@ -112,7 +112,7 @@ export default function TradeDetails() {
   return (
     <div className="flex mx-auto max-w-[2000px] w-full flex-col gap-8 p-10 bg-gray-200">
       <div className="flex items-center justify-between pb-6">
-        <Link to="/app/tradelog" className="text-blue-500 underline text-2xl">
+        <Link to="/app/tradelog" className="text-black underline text-2xl">
           Back
         </Link>
         <h1 className="text-4xl font-bold text-center w-full pr-[52px]">

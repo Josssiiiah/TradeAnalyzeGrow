@@ -193,6 +193,17 @@ export default function Dashboard() {
     );
   }
 
+  // Doesn't render dashboard if there are no trades for the user, I feel like 
+  // the empty dashboard is fine, but we can ask users what they think 
+
+  // if (!data || !data.tradeList || Object.keys(data.tradeList).length === 0) {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen bg-gray-200">
+  //       <div className="text-2xl font-bold text-center">Click profile to import trades</div>
+  //     </div>
+  //   );
+  // }
+
   const {
     tradeList,
     netProfitLoss,
