@@ -82,7 +82,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex flex-col mx-auto max-w-[1400px] w-full p-10">
+    <div className="flex flex-col mx-auto max-w-[1400px] w-full p-10 overflow-hidden">
       <h1 className="text-4xl font-bold text-center">Profile</h1>
       <div className="flex flex-col pt-10 items-center justify-between w-full">
         <div className="flex flex-col w-1/3">
@@ -109,7 +109,7 @@ export default function Profile() {
         </div>
 
         <div className="flex-1 w-full max-w-xl pt-2">
-        <h1 className="py-6 font-bold text-red-500"> Log into Robinhood to import trades. Your credentials are used to make the request, then discarded. They are not stored at any time. </h1>
+        <h1 className="py-6 font-bold text-red-500"> Log into Robinhood to import trades. Your credentials are used to make the request for trading data, then discarded. They are not stored at any time. </h1>
 
           <Form method="post" className="space-y-6" onSubmit={handleSubmit}>
             <div>

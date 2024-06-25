@@ -6,7 +6,7 @@ export function TopNavbar() {
       <ul className="flex space-x-10">
         <h1>
           <NavLink to="/beta" className="text-2xl font-bold">
-            Trade Journal
+            TradeAnalyzeGrow
           </NavLink>
         </h1>
         <li>
