@@ -159,7 +159,7 @@ export default function Profile() {
             </div>
             <button
               type="submit"
-              className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-700"
+              className="bg-black text-white py-2 mb-20 px-4 rounded-md hover:bg-gray-700"
             >
               Import Trades
             </button>
