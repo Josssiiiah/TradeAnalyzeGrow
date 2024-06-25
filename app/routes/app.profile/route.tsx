@@ -82,7 +82,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex flex-col mx-auto max-w-[1400px] w-full p-10 overflow-hidden">
+    <div className="flex flex-col mx-auto max-w-[1400px] w-full  overflow-hidden">
       <h1 className="text-4xl font-bold text-center">Profile</h1>
       <div className="flex flex-col pt-10 items-center justify-between w-full">
         <div className="flex flex-col w-1/3">
@@ -108,10 +108,10 @@ export default function Profile() {
       <button className="text-purple-400 mb-4">Remove image</button> */}
         </div>
 
-        <div className="flex-1 w-full max-w-xl pt-2">
+        <div className="flex-1 w-full max-w-xl pt-2 py-24">
         <h1 className="py-6 font-bold text-red-500"> Log into Robinhood to import trades. Your credentials are used to make the request for trading data, then discarded. They are not stored at any time. </h1>
 
-          <Form method="post" className="space-y-6" onSubmit={handleSubmit}>
+          <Form method="post" className="space-y-6 " onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="username"
@@ -159,13 +159,14 @@ export default function Profile() {
             </div>
             <button
               type="submit"
-              className="bg-black text-white py-2 mb-20 px-4 rounded-md hover:bg-gray-700"
+              className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-700"
             >
               Import Trades
             </button>
           </Form>
         </div>
       </div>
+     
     </div>
   );
 }
