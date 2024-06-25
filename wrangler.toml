@@ -29,7 +29,7 @@ GOOGLE_CLIENT_SECRET="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"
 GOOGLE_REDIRECT_URI="https://tradeanalyzegrow.com/googleredirect"
 
 # This one is also old now
-GOOGLE_REDIRECT_URI="http://josiahzella.pages.dev/googleredirect"
+# GOOGLE_REDIRECT_URI="http://josiahzella.pages.dev/googleredirect"
 
 
 # For local development, we have to use this redirecURI instead
