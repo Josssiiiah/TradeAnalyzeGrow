@@ -83,7 +83,7 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col mx-auto max-w-[1400px] w-full  overflow-hidden">
-      <h1 className="text-4xl font-bold text-center">Profile</h1>
+      <h1 className="text-4xl font-bold text-center mt-4">Profile</h1>
       <div className="flex flex-col pt-10 items-center justify-between w-full">
         <div className="flex flex-col w-1/3">
           <div className="flex flex-col items-center mb-6">
