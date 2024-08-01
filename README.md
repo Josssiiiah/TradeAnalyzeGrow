@@ -1,53 +1,28 @@
-# Welcome to Remix + Vite!
+# TradeAnalyzeGrow
 
-📖 See the [Remix docs](https://remix.run/docs) and the [Remix Vite docs](https://remix.run/docs/en/main/future/vite) for details on supported features.
+TradeAnalyzeGrow is a trading journal web app that I build because the folks at TradeZella.com wouldn't give me the time of day. If you are looking at this and you're not a recuiter please go away it's not ready for public use yet
 
-## Typegen
+## Features
 
-Generate types for your Cloudflare bindings in `wrangler.toml`:
+- Connect to broker and sync trades with one click
+- Track portfolio performance with trade calendar and trade log
+- Take notes based on each trade
+- User-friendly interface
 
-```sh
-npm run typegen
-```
+## Getting Started
 
-You will need to rerun typegen whenever you make changes to `wrangler.toml`.
+Please don't get started, it's not open source, only making this public for recruiting season :)
 
-## Development
+## Technologies Used
 
-Run the Vite dev server:
+- Frontend: Remix and Tailwind
+- Database: Cloudflare D1
+- Bucket Storage: Cloudflare R2
+- ORM: Drizzle
+- Auth: Lucia
+- Build tool: Vite
 
-```sh
-npm run dev
-```
 
-To run Wrangler:
+## License
 
-```sh
-npm run build
-npm run start
-```
-
-## Deployment
-
-> [!WARNING]  
-> Cloudflare does _not_ use `wrangler.toml` to configure deployment bindings.
-> You **MUST** [configure deployment bindings manually in the Cloudflare dashboard][bindings].
-
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then, deploy your app to Cloudflare Pages:
-
-```sh
-npm run deploy
-```
-
-[bindings]: https://developers.cloudflare.com/pages/functions/bindings/
-# JosiahStack
-# PeerProfiles
-# JosiahStack
-# JosiahZella
-# JosiahZella
+This project is licensed under the MIT License.
