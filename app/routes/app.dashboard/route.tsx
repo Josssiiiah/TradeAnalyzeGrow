@@ -193,8 +193,8 @@ export default function Dashboard() {
     );
   }
 
-  // Doesn't render dashboard if there are no trades for the user, I feel like 
-  // the empty dashboard is fine, but we can ask users what they think 
+  // Doesn't render dashboard if there are no trades for the user, I feel like
+  // the empty dashboard is fine, but we can ask users what they think
 
   // if (!data || !data.tradeList || Object.keys(data.tradeList).length === 0) {
   //   return (

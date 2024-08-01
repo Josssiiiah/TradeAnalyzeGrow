@@ -13,7 +13,6 @@ import { sql } from "drizzle-orm";
 import { useToast } from "~/components/ui/use-toast";
 import { useEffect } from "react";
 
- 
 export async function loader({ context }: LoaderFunctionArgs) {
   if (context.session) {
     throw redirect("/");
@@ -77,12 +76,20 @@ export default function LoginRoute() {
             {navigation.state === "submitting" ? "Logging in..." : "Continue"}
           </button>
         </Form> */}
-       
-        <Link to="/google" className="px-4 py-2 mt-10 border flex gap-2 rounded-lg bg-white text-black hover:bg-gray-100 transition duration-150">
-        <img className="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo"/>
-        <span>Sign in with Google</span>
+
+        <Link
+          to="/google"
+          className="px-4 py-2 mt-10 border flex gap-2 rounded-lg bg-white text-black hover:bg-gray-100 transition duration-150"
+        >
+          <img
+            className="w-6 h-6"
+            src="https://www.svgrepo.com/show/475656/google-color.svg"
+            loading="lazy"
+            alt="google logo"
+          />
+          <span>Sign in with Google</span>
         </Link>
-{/* 
+        {/* 
         <div className="mt-4">
           <Link to="/signup" className="text-blue-500 hover:underline">
             Sign up
@@ -95,7 +102,6 @@ export default function LoginRoute() {
     </div>
   );
 }
-
 
 export async function action({ context, request }: ActionFunctionArgs) {
   const db = drizzle(context.cloudflare.env.DB);

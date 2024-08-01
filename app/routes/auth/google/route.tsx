@@ -25,6 +25,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   const state = generateState();
   const codeVerifier = generateCodeVerifier();
   const { env }: any = context.cloudflare;
+  console.log("Env:", env);
   console.log("Google Cliient ID:", env.GOOGLE_CLIENT_ID);
   console.log("Google Cliient Secret:", env.GOOGLE_CLIENT_SECRET);
   console.log("Google Redirect URI:", env.GOOGLE_REDIRECT_URI);

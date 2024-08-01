@@ -5,3 +5,4 @@ node_modules
 .env
 
 .wrangler
+app/rh_connect.js
